@@ -59,6 +59,7 @@ ISR (USART_UDRE_vect) {
 ISR(ANALOG_COMP_vect) {
 	TCNT2 = 0x00;
 	PORTB &= ~(1<<PORTB3);
+	OCR2A = inData[0];
 }
 
 ISR(ADC_vect) {
@@ -170,7 +171,6 @@ int main(void)
 	{
 		if (inOk)
 		{
-			OCR2A = inData[0];
 			for (unsigned char i = 0; i < 3; i++)
 			{
 				PORTB = ((inData[1] & (1<<i)) != 0) ? PORTB | (1<<i) : PORTB & ~(1<<i);
